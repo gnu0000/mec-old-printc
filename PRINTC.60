@@ -1,0 +1,159 @@
+#
+# HP-2 printer definition file for printc.exe
+#
+#
+#
+# HP-2 and HP-3 Printer Codes:
+# ============================
+#
+# This section describes the printer codes which may be set 
+# variables at the end of this definition file. These printer
+# codes are specific to the HP Laserjets and will need to be
+# modified for other printers.
+#
+#
+# Printer codes strings are sent directly to the printer character for 
+# character. certain characters are considered escapes or 
+# translate characters. Characters are specified by one of:
+#
+# method    examples     description
+# --------------------------------------
+# <char>    a  B  Z      all chars except \ ^ ~ and space can be specified
+# \<char>   \c \\ \~     all chars including \ ^ ~ and space
+# \0ah      \44h \0dH    must have 2 valid hex digits and a trailing h
+# \066      \255 \065    must have 3 valid decimal digits
+# ^h        ^a ^Z ^d     a-z or A-Z only valid chars (values = 1-26)
+# ~         ~            synonym for the escape char.
+#
+# spaces are ok but ignored in the string. To include a space in the 
+# string use \032 \20h or \  (with a following space). Lines containing
+# printer codes may not contain comments.
+#
+#
+#  Laserjet command codes
+#  ----------------------
+#  start with esc (27).
+#  Printer commands may be combined if the 1st 2 chars after esc are same.
+#  Chars are converted to lower case except for trailing char.
+#
+#  ~&l1O  and  ~&l2A  become  ~&l1o2A
+#
+#
+#  =======PRINTER/PAPER ATTRIBUTES========
+#
+#  RESET:  ~E                         reset to defaults
+#
+#  ORIENT: ~&l#O                      paper orientation
+#     # = 0  (48)    Portrait
+#         1  (49)    Landscape
+#
+#  LINES:  ~&l#F                      displayed lines per page (use this one)
+#  LINES:  ~&l#D                      lines per inch
+#     # = one of 1,2,3,4,6,8,12,16,24,48
+#  LINES:  ~&l#C                      #/48 in. increments
+#
+#  HALFLF: ~=                         half line feed 
+#
+#  ========FONT ATTRIBUTES==========
+#
+#  SPACING: ~(s#P                      char spacing
+#        # = 0  (48) Fixed
+#           1  (49) Proportional
+#
+#  PITCH:   ~(s#H                      char/inch
+#
+#  PT SIZE: ~(s#V                      point size
+#
+#  STYLE:   ~(s#S                      font style
+#        # = 0  (48) Upright
+#           1  (49) Italic
+#       
+#  WEIGHT:  ~(s#B                      font weight      
+#        # = -3 (45,51) Light
+#           0  (48)    Medium
+#           3  (51)    Bold
+#       
+#  FACE:    ~(s#T                     font typeface
+#        # = 0  (48)    Line Printer    7  (55)    Script
+#           1  (49)    Pica            8  (56)    Prestige
+#           2  (50)    Elite           9  (57)    Caslon
+#           3  (51)    Courier         10 (49,48) Orator
+#           4  (52)    Helv            11 (49,49) Presentations
+#           5  (53)    Tms Roman       14 (49,52) Swiss 721
+#           6  (54)    Gothic          15 (49,53) Dutch 801
+#     
+#  SYMBOL   ~(#U
+#        # = 0   ISO 6 ANSI ASCII
+#            2   ISO 2 IRV
+#            8   Roman-8
+#            10  IBM-PC USA
+#     
+#     
+#     
+#  Examples:   
+#  ---------   
+#   # InitCodes  : reset Portrait 72 lines printed  
+#   # TermCodes  : reset  
+#   # HeaderCodes: pitch=10 Bold  
+#   # BodyCodes  : pitch=16.66 normal  
+#   # FooterCodes: pitch=10 Bold  
+#     
+#   InitCodes  =~E~&l0o72F  
+#   TermCodes  =~E
+#   HeaderCodes=~(s0p10h3B
+#   BodyCodes  =~(s0p16.66h0B    
+#   FooterCodes=~(s0p10h3B
+#     
+#     
+# ibm-pcset portrait 16.67horiz 8.5pt Upright NormalWeight LinePrinter
+# ~(10U~(s0p16.67h8.5v0s0b0T
+
+
+
+######## PRINTC Configuration Options ########
+
+# === BOTH PORTRAIT & LANDSCAPE MODES ===
+Message===== CES GROUP WORK ====  (c) 1991 Info Tech Inc.
+
+LeftMargin  = 3
+RightMargin = 2
+TopLines    = 0
+StartPage   = 1
+EndPage     = 32767
+
+Even        = True
+Odd         = True
+Truncate    = False
+LineNumbers = True
+Header      = True
+Footer      = True
+
+
+# HeaderCodes: ibm-pcset Fixed 10.00horiz 12pt Upright BoldWeight LinePrinter
+# BodyCodes  : halfline ibm-pcset Fixed 16.67horiz 8.5pt Upright NormalWeight LinePrinter
+# FooterCodes: halfline ibm-pcset Fixed 10.00horiz 12pt Upright BoldWeight LinePrinter
+# TermCodes  : reset
+HeaderCodes=~(10U~(s0p10.00h12v0s3b0T
+BodyCodes  =~=~(10U~(s0p16.67h8.5v0s0b0T
+FooterCodes=~=~(10U~(s0p10.00h12v0s3b0T
+TermCodes  =~E
+
+
+# === PORTRAIT === 
+PageLength  = 64
+HeaderWidth = 80
+FooterWidth = 80
+BodyWidth   = 131
+# InitCodes  : reset Portrait 72 lines printed
+InitCodes  =~E~&l0o72F
+
+
+# === Special Options ===
+#OutFile = d:\tmp\outfile.txt
+#OutFile = prn
+#OutFile = out
+#Chop    = 2,62,2 # set chop mode for line justified doc (vs FF justify)
+IgnoreFF = False  # ignore FF on input files 
+PageFF   = TRUE   # send FF after each page is printed (N if PageLen=Len)
+
+

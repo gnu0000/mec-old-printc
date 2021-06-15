@@ -1,0 +1,27 @@
+#csv.obj : csv.c
+#   cl -c /W3 $*.c
+#
+#printc.exe : printc.c
+#   cl /W3 /F 4000 $*.c c:\lib\setargv.obj/NOE csv.obj slibcec.lib
+
+all: printc.exe
+
+.c.obj:
+   cl /W3 /c /AS /Osler /Grs /nologo $*.c
+
+#csv.obj : csv.c
+#    cl /c /Od /W3 $*.c
+#
+#arg2.obj : arg2.c
+#    cl /c /Od /W3 $*.c
+#
+#printc.obj : printc.c
+#    cl /c /Od /W3 /Zid $*.c
+##    cl /c /Od /W3 $*.c
+
+printc.exe : printc.obj  csv.obj arg2.obj
+   link $* arg2 csv c:\lib\setargv.obj/E/F/PACKC/PACKD/NOD/NOE,,NUL,os2 slibcep,$*
+#    link $* csv arg2 c:\lib\setargv.obj/noe/nod,,$*,os2 slibcep,$*
+#    link /Co $* arg2 csv c:\lib\setargv.obj/noe/nod,,$*,os2 slibcep,$*
+    bind $*.exe $(DOSLIB)
+

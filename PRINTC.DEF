@@ -1,0 +1,4 @@
+NAME          printc   WINDOWCOMPAT
+DESCRIPTION  'printc, Copyright (C) 1990, Info Tech, Inc. All rights reserved'
+HEAPSIZE 8000
+STACKSIZE 32000

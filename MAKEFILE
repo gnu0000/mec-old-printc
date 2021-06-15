@@ -1,0 +1,38 @@
+DEBUG = FALSE
+
+!IF "$(DEBUG)" == "TRUE"
+COPT = /c /W3 /AL /Od /Zip /nologo
+LOPT = /CO/NOLOGO/NOD/NOE
+LIBS = os2 llibcep
+BIND = rem
+!ELSE
+COPT = /c /W3 /AL /Ox /Grs /Zp /nologo
+LOPT = /E/F/PACKC/NOLOGO/NOD/NOE
+LIBS = os2 llibcep
+BIND = bind $*.exe
+!ENDIF
+
+PROG = Printc
+
+all   : $(PROG).exe
+
+.c.obj:
+   cl $(COPT) $*.c
+
+$(PROG).exe : $(PROG).obj arg2.obj csv.obj
+  link $* arg2 csv $(LOPT),,NUL,$(LIBS),$*.def
+  $(BIND)
+
+
+#
+#
+#
+#all : printc.exe
+#
+#.c.obj:
+#   cl /W3 /c /AL /Od /Zi /nologo $*.c
+#
+#printc.exe : printc.obj arg2.obj csv.obj
+#  link printc arg2 csv/CO,,NUL,os2 llibcep/NOD/NOE,$*.def
+#  bind printc.exe
+#
